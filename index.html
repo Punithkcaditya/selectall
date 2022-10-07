@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    ul {
+  list-style: none;
+  margin: 5px 20px;
+}
+
+li {
+  margin: 10px 0;
+}
+</style>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<ul>
+  <li>
+    <label for="redskins">
+      <input type="checkbox" name="redskins" id="redskins">
+      Redskins</label>
+
+    <ul>
+      <li> <label for="cheifs">
+          <input type="checkbox" name="cheifs" id="cheifs">
+          <label for="cheifs">Cheifs</label>
+      </li>
+      <li>
+        <label for="vikings"><input type="checkbox" name="vikings" id="vikings">
+          Vikings</label>
+
+
+      </li>
+      <li>
+        <label for="bears"><input type="checkbox" name="bears" id="bears">
+          Bears</label>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <label for="packers">
+      <input type="checkbox" name="packers" id="packers">
+      Packers</label>
+
+    <ul>
+      <li> <label for="chargers">
+          <input type="checkbox" name="chargers" id="chargers">
+          <label for="chargers">Chargers</label>
+      </li>
+      <li>
+        <label for="giants"><input type="checkbox" name="giants" id="giants">
+          Giants</label>
+
+
+      </li>
+      <li>
+        <label for="jets"><input type="checkbox" name="jets" id="jets">
+          Jets</label>
+      </li>
+    </ul>
+  </li>
+</ul>
+<script>
+
+
+$('input[type=checkbox]').change(function (e) {
+  var checked = $(this).prop('checked');
+  var isParent = !!$(this).closest('li').find(' > ul').length;
+  alert(isParent);
+  if (isParent) {
+    // if a parent level checkbox is changed, locate all children
+    var children = $(this).closest('li').find('ul input[type=checkbox]');
+    children.prop({
+      checked
+    }); // all children will have what parent has
+  } else {
+    // if a child checkbox is changed, locate parent and all children
+    var parent = $(this).closest('ul').closest('li').find('>label input[type=checkbox]');
+    var children = $(this).closest('ul').find('input[type=checkbox]');
+    if (children.filter(':checked').length === 0) {
+      // if all children are unchecked
+      parent.prop({ checked: false, indeterminate: false });
+    } else if (children.length === children.filter(':checked').length) {
+      // if all children are checked
+      parent.prop({ checked: true, indeterminate: false });
+    } else {
+      // if some of the children are checked
+      parent.prop({ checked: true, indeterminate: true });
+    }
+  }
+});
+</script>
+</body>
+</html>
