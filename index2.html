@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div class="container">
+
+  <div class="parent-checkbox">
+    <p>parents</p>
+    
+    <div class="form-check">
+      <input data-class="A" type="checkbox" value="A1" id="A1" name="A1">
+      <label for="A1">A</label>
+    </div>
+
+    <div class="form-check">
+      <input data-class="B" type="checkbox" value="B1" id="B1" name="B1">
+      <label for="B1">B</label>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="child-checkbox">
+    <p>children</p>
+    
+    <div class="form-check">
+      <input data-class="A" type="checkbox" value="A2" id="A2" name="A2">
+      <label for="A2">A</label>
+    </div>
+
+    <div class="form-check">
+      <input data-class="B" type="checkbox" value="B2" id="B2" name="B2">
+      <label for="B2">B</label>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+$(document).on('click',
+  '.parent-checkbox input[type=checkbox]',
+  function() {
+
+    if ($(this).is(":checked")) {
+      const data_class = $(this).data('class');
+      //alert(data_class);
+      $(this).closest(".container").
+      find('.child-checkbox .form-check > input[type=checkbox]:not([data-class="' + data_class + '"])').
+      attr("disabled", true);
+    } else {
+
+      const data_class = $(this).data('class');
+      
+      $(this).closest(".container").
+      find('.child-checkbox .form-check > input[type=checkbox]').
+      attr("disabled", false);
+    }
+  }
+);
+</script>
+
+</body>
+</html>
